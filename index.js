@@ -6,6 +6,8 @@ import cors from "cors";
 import UserRoutes from "./Kambaz/Users/routes.js";
 import "dotenv/config";
 import session from "express-session";
+import ModuleRoutes from "./Kambaz/Modules/routes.js";
+import AssignmentRoutes from './Kambaz/Assignments/routes.js';
 const app = express()
 app.use(cors(
     {
@@ -33,10 +35,12 @@ app.use(session(sessionOptions));
 //     res.header('Expires', new Date(0).toUTCString())
 //     next()
 // })
-app.use(express.json({ limit: '50mb' }));
+app.use(express.json());
 
 UserRoutes(app);
 CourseRoutes(app);
+ModuleRoutes(app);
+AssignmentRoutes(app);
 Lab5(app)
 Hello(app)
 app.listen(process.env.PORT || 4000)
