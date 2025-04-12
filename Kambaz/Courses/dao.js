@@ -1,15 +1,7 @@
-import Database from "../Database/index.js";
 import model from "./model.js";
 import { v4 as uuidv4 } from "uuid";
 export function findAllCourses() {
     return model.find();
-}
-
-export function findCoursesForEnrolledUser(userId) {
-    const { courses, enrollments } = Database;
-    const enrolledCourses = courses.filter((course) =>
-        enrollments.some((enrollment) => enrollment.user === userId && enrollment.course === course._id));
-    return enrolledCourses;
 }
 
 export function createCourse(course) {
@@ -22,11 +14,7 @@ export function deleteCourse(courseId) {
 }
 
 export function updateCourse(courseId, courseUpdates) {
-    const { courses } = Database;
-    const course = courses.find((course) => course._id === courseId);
-    console.log(course)
-    Object.assign(course, courseUpdates);
-    return course;
+    return model.updateOne({ _id: courseId }, { $set: courseUpdates });
 }
 
 

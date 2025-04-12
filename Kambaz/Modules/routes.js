@@ -17,7 +17,5 @@ export default function ModuleRoutes(app) {
         res.send(status);
     });
 
-    ;
-
 }
 

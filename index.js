@@ -8,14 +8,12 @@ import "dotenv/config";
 import session from "express-session";
 import ModuleRoutes from "./Kambaz/Modules/routes.js";
 import AssignmentRoutes from './Kambaz/Assignments/routes.js';
-import EnrollmentRoutes from './Kambaz/Enrollments/routes.js';
 import mongoose from "mongoose";
 const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kambaz"
 mongoose.connect(CONNECTION_STRING)
     .then(() => console.log("Connected to MongoDB successfully"))
     .catch(err => {
         console.error("MongoDB connection error:", err);
-        // Optionally process.exit(1) for fatal connection errors
     });
 const app = express()
 app.use(cors(
@@ -38,19 +36,12 @@ if (process.env.NODE_ENV !== "development") {
     };
 }
 app.use(session(sessionOptions));
-// app.use((req, res, next) => {
-//     res.header('Cache-Control', 'no-store, must-revalidate')
-//     res.header('Pragma', 'no-cache')
-//     res.header('Expires', new Date(0).toUTCString())
-//     next()
-// })
 app.use(express.json());
 
 UserRoutes(app);
 CourseRoutes(app);
 ModuleRoutes(app);
 AssignmentRoutes(app);
-EnrollmentRoutes(app);
 Lab5(app)
 Hello(app)
 app.listen(process.env.PORT || 4000)
